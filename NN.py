@@ -19,7 +19,7 @@ class ConvNet(nn.Module):
         self.conv0 = nn.Conv2d(3, 128, 3, stride=1, padding=0)
         self.conv1 = nn.Conv2d(128, 128, 3, stride=1, padding=0)
         self.conv2 = nn.Conv2d(128, 128, 3, stride=1, padding=0)
-        self.conv3 = nn.Conv2d(128, 356, 3, stride=1, padding=0)
+        self.conv3 = nn.Conv2d(128, 256, 3, stride=1, padding=0)
 
         self.adaptivepool = nn.AdaptiveAvgPool2d((1, 1))
         self.flatten = nn.Flatten()

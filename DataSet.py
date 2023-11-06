@@ -39,7 +39,7 @@ class DataSet2Class(torch.utils.data.Dataset):
         img = img.astype(np.float32)
         img = img / 255.0
 
-        img = cv2.resize(img, (64, 64), interpolation=cv2.INTER_AREA)
+        img = cv2.resize(img, (128, 128), interpolation=cv2.INTER_AREA)
 
         img = img.transpose((2, 0, 1))
 

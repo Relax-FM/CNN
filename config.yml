@@ -3,6 +3,7 @@ network:
     device: 'cuda'
     use_amp: True
     epochs: 20
+    test_model_path: '06_11_2023_19_21_CUDA.pth'
 
     optimizer:
         name: 'adam'
@@ -15,20 +16,20 @@ network:
 
 
 dataset:
-    file_names:
-        train_dogs_path: 'C:/Users/relax_fm/PycharmProjects/CNN/dataset/training_set/dogs'
-        train_cats_path: 'C:/Users/relax_fm/PycharmProjects/CNN/dataset/training_set/cats'
-        test_dogs_path: './dataset/test_set/dogs'
-        test_cats_path: './dataset/test_set/cats'
-
     train_loader:
         batch_size: 16
         shuffle: True
         num_workers: 0
         drop_last: True
+        file_names:
+            train_dogs_path: 'C:/Users/relax_fm/PycharmProjects/CNN/dataset/training_set/dogs'
+            train_cats_path: 'C:/Users/relax_fm/PycharmProjects/CNN/dataset/training_set/cats'
 
     test_loader:
         batch_size: 16
         shuffle: True
         num_workers: 0
         drop_last: False
+        file_names:
+            test_dogs_path: './dataset/test_set/dogs'
+            test_cats_path: './dataset/test_set/cats'
