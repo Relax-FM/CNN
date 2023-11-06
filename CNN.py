@@ -70,30 +70,39 @@ optimizer = get_optimizer(CNNet.parameters(), network_options.get('optimizer'))
 
 device = network_options.get('device')
 use_amp = network_options.get('use_amp')
+scaler = torch.cuda.amp.GradScaler()
 epochs = network_options.get('epochs')
 
+CNNet = CNNet.to(device)
+loss_fn = loss_fn.to(device)
+
 start_time = time.time()
+
+#print("I'm here 1")
 
 for epoch in range(epochs):
     loss_val = 0
     acc_val = 0
     for sample in train_loader:   # (pbar := tqdm(train_loader))
         img, lbl = sample['img'], sample['label']
+        lbl = F.one_hot(lbl, 2).float()
+        img = img.to(device)
+        lbl = lbl.to(device)
         optimizer.zero_grad()
 
-        lbl = F.one_hot(lbl, 2).float()
-
-        with autocast(use_amp, dtype=torch.float16):
+        #print("I'm here 2")
+        with autocast(use_amp):
             pred = CNNet(img)
             loss = loss_fn(pred, lbl)
-
-        loss.backward()
+        #print("I'm here 3")
+        scaler.scale(loss).backward()
         loss_item = loss.item()
         loss_val += loss_item
 
-        optimizer.step()
+        scaler.step(optimizer)
+        scaler.update()
 
-        acc_current = accuracy(pred, lbl)
+        acc_current = accuracy(pred.cpu().float(), lbl.cpu().float())
         acc_val += acc_current
 
     # pbar.set_description(f'loss: {loss_item:.5f}\taccuracy: {acc_current:.3f}')
