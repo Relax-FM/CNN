@@ -1,0 +1,34 @@
+network:
+    name: 'CNN'
+    device: 'cuda'
+    use_amp: True
+    epochs: 20
+
+    optimizer:
+        name: 'adam'
+        beta1: 0.9
+        beta2: 0.99
+        lr: 1e-3
+
+    loss:
+        name: 'cel'
+
+
+dataset:
+    file_names:
+        train_dogs_path: 'C:/Users/relax_fm/PycharmProjects/CNN/dataset/training_set/dogs'
+        train_cats_path: 'C:/Users/relax_fm/PycharmProjects/CNN/dataset/training_set/cats'
+        test_dogs_path: './dataset/test_set/dogs'
+        test_cats_path: './dataset/test_set/cats'
+
+    train_loader:
+        batch_size: 16
+        shuffle: True
+        num_workers: 0
+        drop_last: True
+
+    test_loader:
+        batch_size: 16
+        shuffle: True
+        num_workers: 0
+        drop_last: False
