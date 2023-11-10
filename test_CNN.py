@@ -1,4 +1,5 @@
 import yaml
+import torch
 
 from DataSet import DataSet2Class
 from NN import ConvNet

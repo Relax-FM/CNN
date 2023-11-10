@@ -1,4 +1,5 @@
 from torch.cuda.amp import autocast, GradScaler
+import torch
 
 import time
 import yaml
