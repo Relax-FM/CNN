@@ -1,23 +1,9 @@
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.cuda.amp import autocast, GradScaler
-import torchvision as tv
-import cv2
-
-import numpy as np
-import os
-import matplotlib.pyplot as plt
-from tqdm import tqdm
-import time
 import yaml
-import datetime
 
 from DataSet import DataSet2Class
 from NN import ConvNet
 from Functions import *
 from Losses import get_losser
-from Optimizer import get_optimizer
 
 options_path = 'config.yml'
 with open(options_path, 'r') as options_stream:

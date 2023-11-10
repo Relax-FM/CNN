@@ -1,14 +1,5 @@
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
 from torch.cuda.amp import autocast, GradScaler
-import torchvision as tv
-import cv2
 
-import numpy as np
-import os
-import matplotlib.pyplot as plt
-from tqdm import tqdm
 import time
 import yaml
 import datetime
@@ -34,10 +25,6 @@ train_cats_path = file_names.get('train_cats_path')
 
 train_ds_catsdogs = DataSet2Class(train_dogs_path, train_cats_path)
 
-# plt.figure(figsize=(8, 8))
-# plt.imshow(train_ds_catsdogs[0]['img'].numpy().transpose((1, 2, 0)))
-# plt.show()
-
 train_loader = torch.utils.data.DataLoader(
     train_ds_catsdogs, shuffle=train_loader.get('shuffle'),
     batch_size=train_loader.get('batch_size'), num_workers=train_loader.get('num_workers'),
@@ -45,14 +32,6 @@ train_loader = torch.utils.data.DataLoader(
 )
 
 CNNet = ConvNet()
-
-# print(count_parametrs(CNNet))
-
-# for sample in train_loader:
-#     img = sample['img']
-#     label = sample['label']
-#     print(CNNet(img))
-#     break
 
 loss_fn = get_losser(network_options.get('loss'))
 optimizer = get_optimizer(CNNet.parameters(), network_options.get('optimizer'))
@@ -67,8 +46,6 @@ loss_fn = loss_fn.to(device)
 
 start_time = time.time()
 
-#print("I'm here 1")
-
 for epoch in range(epochs):
     loss_val = 0
     acc_val = 0
@@ -79,11 +56,9 @@ for epoch in range(epochs):
         lbl = lbl.to(device)
         optimizer.zero_grad()
 
-        #print("I'm here 2")
         with autocast(use_amp):
             pred = CNNet(img)
             loss = loss_fn(pred, lbl)
-        #print("I'm here 3")
         scaler.scale(loss).backward()
         loss_item = loss.item()
         loss_val += loss_item
@@ -94,7 +69,6 @@ for epoch in range(epochs):
         acc_current = accuracy(pred.cpu().float(), lbl.cpu().float())
         acc_val += acc_current
 
-    # pbar.set_description(f'loss: {loss_item:.5f}\taccuracy: {acc_current:.3f}')
     print(f"Epoch : {epoch+1}")
     print(f"Loss : {loss_val / len(train_loader)}")
     print(f"Acc : {acc_val / len(train_loader)}")
@@ -105,8 +79,3 @@ curDate = datetime.datetime.now().strftime("%d_%m_%Y_%H_%M")
 print(curDate)
 path_name = "" + curDate + "_" + device.upper() + ".pth"
 torch.save(CNNet.state_dict(), path_name)
-
-path_name = "\'" + path_name + "\'"
-options['network']['test_model_path'] = path_name
-with open(options_path, 'w') as file:
-    yaml.dump(options, file)

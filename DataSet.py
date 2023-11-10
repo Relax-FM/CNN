@@ -1,15 +1,8 @@
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-
-import torchvision as tv
 import cv2
 
 import numpy as np
 import os
-import matplotlib.pyplot as plt
-import tqdm
-
 
 class DataSet2Class(torch.utils.data.Dataset):
     def __init__(self, path_dir1: str, path_dir2: str):

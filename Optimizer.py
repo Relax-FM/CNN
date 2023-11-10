@@ -1,13 +1,5 @@
 import torch
-import torch.nn as nn
 import torch.optim
-import torch.nn.functional as F
-
-import os
-import numpy as np
-import matplotlib.pyplot as plt
-import yaml
-
 
 def get_optimizer(model_params, option_optimizer: dict):
     name = option_optimizer.get('name', None)
