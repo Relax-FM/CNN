@@ -22,8 +22,8 @@ dataset:
         num_workers: 0
         drop_last: True
         file_names:
-            train_dogs_path: 'C:/Users/relax_fm/PycharmProjects/CNN/dataset/training_set/dogs'
-            train_cats_path: 'C:/Users/relax_fm/PycharmProjects/CNN/dataset/training_set/cats'
+            train_dogs_path: './dataset/training_set/dogs'
+            train_cats_path: './dataset/training_set/cats'
 
     test_loader:
         batch_size: 16
